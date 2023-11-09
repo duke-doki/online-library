@@ -63,6 +63,10 @@ for book_id in range(1, 11):
         folder_for_books = 'books'
         folder_for_images = 'images'
 
-        download_txt(url_txt, title, folder_for_books)
-        download_image(image_url, img_name, folder_for_images)
+        posts = soup.find_all(class_='texts')
+        for post in posts:
+            comment = post.find('span')
+            print(comment.text)
+        # download_txt(url_txt, title, folder_for_books)
+        # download_image(image_url, img_name, folder_for_images)
 
