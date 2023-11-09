@@ -1,11 +1,11 @@
+import argparse
 import os
+from pathlib import Path
+from urllib.parse import urljoin, urlparse
 
 import requests
-from pathlib import Path
-from pathvalidate import sanitize_filename
 from bs4 import BeautifulSoup
-from urllib.parse import urljoin, urlparse
-import argparse
+from pathvalidate import sanitize_filename
 
 
 def check_for_redirect(response):
