@@ -4,7 +4,8 @@ import requests
 from pathlib import Path
 from pathvalidate import sanitize_filename
 from bs4 import BeautifulSoup
-from urllib.parse import urljoin, urlparse, urlsplit
+from urllib.parse import urljoin, urlparse
+import argparse
 
 
 def check_for_redirect(response):
@@ -70,29 +71,38 @@ def parse_book_page(response):
     return book_info
 
 
-for book_id in range(1, 11):
-    url_txt = f'https://tululu.org/txt.php?id={book_id}'
-    url_book = f'https://tululu.org/b{book_id}/'
-    response_book = requests.get(url_book)
-    response_book.raise_for_status()
-    response_txt = requests.get(url_txt)
-    response_txt.raise_for_status()
-    try:
-        check_for_redirect(response_book)
-        check_for_redirect(response_txt)
-    except requests.HTTPError:
-        continue
-    else:
-        folder_for_books = 'books'
-        folder_for_images = 'images'
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(
+        description='This program allows to download books'
+    )
+    parser.add_argument('start_id', help='Enter the id of the first book',
+                        default=1, type=int)
+    parser.add_argument('end_id', help='Enter the id of the last book',
+                        default=2, type=int)
+    args = parser.parse_args()
 
-        book_info = parse_book_page(response_book)
+    folder_for_books = 'books'
+    folder_for_images = 'images'
+    for book_id in range(args.start_id, args.end_id+1):
+        url_txt = f'https://tululu.org/txt.php?id={book_id}'
+        url_book = f'https://tululu.org/b{book_id}/'
+        response_book = requests.get(url_book)
+        response_book.raise_for_status()
+        response_txt = requests.get(url_txt)
+        response_txt.raise_for_status()
+        try:
+            check_for_redirect(response_book)
+            check_for_redirect(response_txt)
+        except requests.HTTPError:
+            continue
+        else:
+            book_info = parse_book_page(response_book)
 
-        download_txt(url_txt,
-                     book_info['title'],
-                     folder_for_books
-                     )
-        download_image(book_info['image_url'],
-                       book_info['img_name'],
-                       folder_for_images
-                       )
+            download_txt(url_txt,
+                         book_info['title'],
+                         folder_for_books
+                         )
+            download_image(book_info['image_url'],
+                           book_info['img_name'],
+                           folder_for_images
+                           )
