@@ -13,9 +13,9 @@ def check_for_redirect(response):
         raise requests.HTTPError
 
 
-def download_txt(url, filename, folder):
+def download_txt(url, filename, folder, params):
     Path(f'{folder}').mkdir(exist_ok=True)
-    response = requests.get(url)
+    response = requests.get(url, params=params)
     response.raise_for_status()
     filename = sanitize_filename(filename)
     with open(f'{folder}/{filename}.txt', 'w') as file:
@@ -84,11 +84,12 @@ if __name__ == '__main__':
     folder_for_books = 'books'
     folder_for_images = 'images'
     for book_id in range(args.start_id, args.end_id+1):
-        url_txt = f'https://tululu.org/txt.php?id={book_id}'
+        url_txt = f'https://tululu.org/txt.php'
+        params = {'id': book_id}
         url_book = f'https://tululu.org/b{book_id}/'
         response_book = requests.get(url_book)
         response_book.raise_for_status()
-        response_txt = requests.get(url_txt)
+        response_txt = requests.get(url_txt, params=params)
         response_txt.raise_for_status()
         try:
             check_for_redirect(response_book)
@@ -100,7 +101,8 @@ if __name__ == '__main__':
 
             download_txt(url_txt,
                          book_info['title'],
-                         folder_for_books
+                         folder_for_books,
+                         params
                          )
             download_image(book_info['image_url'],
                            book_info['img_name'],
