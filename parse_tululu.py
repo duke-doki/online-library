@@ -41,9 +41,9 @@ def parse_book_page(response):
     soup = BeautifulSoup(response.text, 'lxml')
 
     title_tag = soup.find('h1')
-    book = title_tag.text.split('::')
-    title = f'{book_id}. {book[0].strip()}'
-    author = book[1].strip()
+    split_tag = title_tag.text.split('::')
+    title = f'{book_id}. {split_tag[0].strip()}'
+    author = split_tag[1].strip()
 
     image = soup.find('div', class_='bookimage').find('img')['src']
     image_url = urljoin('https://tululu.org/', image)
@@ -61,7 +61,7 @@ def parse_book_page(response):
     for genre in genres:
         all_genres.append(genre.text)
 
-    book_info = {
+    book = {
         'title': title,
         'author': author,
         'image_url': image_url,
@@ -70,7 +70,7 @@ def parse_book_page(response):
         'genres': all_genres
     }
 
-    return book_info
+    return book
 
 
 if __name__ == '__main__':
@@ -98,15 +98,15 @@ if __name__ == '__main__':
                 txt_response.raise_for_status()
                 check_for_redirect(book_response)
                 check_for_redirect(txt_response)
-                book_info = parse_book_page(book_response)
+                book = parse_book_page(book_response)
 
                 download_txt(txt_url,
-                             book_info['title'],
+                             book['title'],
                              folder_for_books,
                              params
                              )
-                download_image(book_info['image_url'],
-                               book_info['img_name'],
+                download_image(book['image_url'],
+                               book['img_name'],
                                folder_for_images
                                )
             except requests.exceptions.ConnectionError as e:
