@@ -89,6 +89,7 @@ if __name__ == '__main__':
         txt_url = f'https://tululu.org/txt.php'
         params = {'id': book_id}
         book_url = f'https://tululu.org/b{book_id}/'
+        reconnection_tries = 0
         while True:
             try:
                 book_response = requests.get(book_url)
@@ -110,8 +111,12 @@ if __name__ == '__main__':
                                )
             except requests.exceptions.ConnectionError as e:
                 print(f'At {book_id} connection error occurred: {e}')
-                print('Retry after 5 seconds...')
-                time.sleep(5)
+                reconnection_tries += 1
+                if reconnection_tries <= 1:
+                    print('Retrying...')
+                else:
+                    print('Retry after 5 seconds...')
+                    time.sleep(5)
             except requests.HTTPError as e:
                 print(f'At {book_id} HTTP error occurred: {e}')
                 break
