@@ -95,15 +95,17 @@ if __name__ == '__main__':
                 check_for_redirect(txt_response)
                 book = parse_book_page(book_response)
 
-                download_txt(txt_url,
-                             book['title'],
-                             folder_for_books,
-                             params
-                             )
-                download_image(book['image_url'],
-                               book['img_name'],
-                               folder_for_images
-                               )
+                download_txt(
+                    txt_url,
+                    book['title'],
+                    folder_for_books,
+                    params
+                )
+                download_image(
+                    book['image_url'],
+                    book['img_name'],
+                    folder_for_images
+                )
             except requests.exceptions.ConnectionError as e:
                 print(f'At {book_id} connection error occurred: {e}')
                 reconnection_tries += 1
