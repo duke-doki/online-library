@@ -84,22 +84,22 @@ if __name__ == '__main__':
     folder_for_books = 'books'
     folder_for_images = 'images'
     for book_id in range(args.start_id, args.end_id+1):
-        url_txt = f'https://tululu.org/txt.php'
+        txt_url = f'https://tululu.org/txt.php'
         params = {'id': book_id}
-        url_book = f'https://tululu.org/b{book_id}/'
-        response_book = requests.get(url_book)
-        response_book.raise_for_status()
-        response_txt = requests.get(url_txt, params=params)
-        response_txt.raise_for_status()
+        book_url = f'https://tululu.org/b{book_id}/'
+        book_response = requests.get(book_url)
+        book_response.raise_for_status()
+        txt_response = requests.get(txt_url, params=params)
+        txt_response.raise_for_status()
         try:
-            check_for_redirect(response_book)
-            check_for_redirect(response_txt)
+            check_for_redirect(book_response)
+            check_for_redirect(txt_response)
         except requests.HTTPError:
             continue
         else:
-            book_info = parse_book_page(response_book)
+            book_info = parse_book_page(book_response)
 
-            download_txt(url_txt,
+            download_txt(txt_url,
                          book_info['title'],
                          folder_for_books,
                          params
