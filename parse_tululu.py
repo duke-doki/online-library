@@ -1,5 +1,7 @@
 import argparse
 import os
+import time
+
 from pathlib import Path
 from urllib.parse import urljoin, urlparse
 
@@ -87,24 +89,33 @@ if __name__ == '__main__':
         txt_url = f'https://tululu.org/txt.php'
         params = {'id': book_id}
         book_url = f'https://tululu.org/b{book_id}/'
-        book_response = requests.get(book_url)
-        book_response.raise_for_status()
-        txt_response = requests.get(txt_url, params=params)
-        txt_response.raise_for_status()
-        try:
-            check_for_redirect(book_response)
-            check_for_redirect(txt_response)
-        except requests.HTTPError:
-            continue
-        else:
-            book_info = parse_book_page(book_response)
+        while True:
+            try:
+                book_response = requests.get(book_url)
+                book_response.raise_for_status()
+                txt_response = requests.get(txt_url, params=params)
+                txt_response.raise_for_status()
+                check_for_redirect(book_response)
+                check_for_redirect(txt_response)
+                book_info = parse_book_page(book_response)
 
-            download_txt(txt_url,
-                         book_info['title'],
-                         folder_for_books,
-                         params
-                         )
-            download_image(book_info['image_url'],
-                           book_info['img_name'],
-                           folder_for_images
-                           )
+                download_txt(txt_url,
+                             book_info['title'],
+                             folder_for_books,
+                             params
+                             )
+                download_image(book_info['image_url'],
+                               book_info['img_name'],
+                               folder_for_images
+                               )
+            except requests.exceptions.ConnectionError as e:
+                print(f'At {book_id} connection error occurred: {e}')
+                print('Retry after 5 seconds...')
+                time.sleep(5)
+            except requests.HTTPError as e:
+                print(f'At {book_id} HTTP error occurred: {e}')
+                break
+            else:
+                break
+
+
