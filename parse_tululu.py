@@ -51,15 +51,10 @@ def parse_book_page(response):
     img_name = img_path.split('/')[-1]
 
     posts = soup.find_all(class_='texts')
-    all_comments = []
-    for post in posts:
-        comment = post.find('span')
-        all_comments.append(comment.text)
+    all_comments = [post.find('span').text for post in posts]
 
     genres = soup.find('span', class_='d_book').find_all('a')
-    all_genres = []
-    for genre in genres:
-        all_genres.append(genre.text)
+    all_genres = [genre.text for genre in genres]
 
     book = {
         'title': title,
