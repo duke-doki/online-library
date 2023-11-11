@@ -21,10 +21,11 @@ def download_txt(url, filename, folder, params):
     response.raise_for_status()
     check_for_redirect(response)
     filename = sanitize_filename(filename)
-    with open(f'{folder}/{filename}.txt', 'w') as file:
+    file_path = f'{folder}/{filename}.txt'
+    with open(file_path, 'w') as file:
         file.write(response.text)
 
-    return os.path.join(folder, f'{filename}.txt')
+    return os.path.abspath(file_path)
 
 
 def download_image(url, filename, folder):
@@ -32,10 +33,11 @@ def download_image(url, filename, folder):
     response = requests.get(url)
     response.raise_for_status()
     filename = sanitize_filename(filename)
-    with open(f'{folder}/{filename}', 'wb') as file:
+    file_path = f'{folder}/{filename}'
+    with open(file_path, 'wb') as file:
         file.write(response.content)
 
-    return os.path.join(folder, f'{filename}.txt')
+    return os.path.abspath(file_path)
 
 
 def parse_book_page(response):
