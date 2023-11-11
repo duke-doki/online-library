@@ -46,7 +46,7 @@ def parse_book_page(response):
     author = split_tag[1].strip()
 
     image = soup.find('div', class_='bookimage').find('img')['src']
-    image_url = urljoin('https://tululu.org/', image)
+    image_url = urljoin(response.url, image)
     img_path = urlparse(image_url).path
     img_name = img_path.split('/')[-1]
 
