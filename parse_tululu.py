@@ -19,6 +19,7 @@ def download_txt(url, filename, folder, params):
     Path(f'{folder}').mkdir(exist_ok=True)
     response = requests.get(url, params=params)
     response.raise_for_status()
+    check_for_redirect(response)
     filename = sanitize_filename(filename)
     with open(f'{folder}/{filename}.txt', 'w') as file:
         file.write(response.text)
@@ -89,10 +90,7 @@ if __name__ == '__main__':
             try:
                 book_response = requests.get(book_url)
                 book_response.raise_for_status()
-                txt_response = requests.get(txt_url, params=params)
-                txt_response.raise_for_status()
                 check_for_redirect(book_response)
-                check_for_redirect(txt_response)
                 book = parse_book_page(book_response)
 
                 download_txt(
