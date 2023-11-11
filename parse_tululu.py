@@ -11,7 +11,7 @@ from pathvalidate import sanitize_filename
 
 
 def check_for_redirect(response):
-    if response.history and response.url == 'https://tululu.org/':
+    if response.url == 'https://tululu.org/':
         raise requests.HTTPError
 
 
