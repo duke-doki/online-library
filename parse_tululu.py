@@ -40,7 +40,7 @@ def download_image(url, filename, folder):
     return os.path.abspath(file_path)
 
 
-def parse_book_page(response):
+def parse_book_page(response, book_id):
     soup = BeautifulSoup(response.text, 'lxml')
 
     title_tag = soup.find('h1')
@@ -93,7 +93,7 @@ if __name__ == '__main__':
                 book_response = requests.get(book_url)
                 book_response.raise_for_status()
                 check_for_redirect(book_response)
-                book = parse_book_page(book_response)
+                book = parse_book_page(book_response, book_id)
 
                 download_txt(
                     txt_url,
