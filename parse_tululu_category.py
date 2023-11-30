@@ -1,22 +1,23 @@
-import time
 import json
+import time
+
 import requests
 from bs4 import BeautifulSoup
-from urllib.parse import urljoin
 
 from parse_tululu import check_for_redirect, parse_book_page, download_txt, \
     download_image
 
-
-
-for page_num in range(1, 5):
+for page_num in range(1, 2):
     scifi_catalog_url = f'https://tululu.org/l55/{page_num}'
     response = requests.get(scifi_catalog_url)
     response.raise_for_status()
 
     soup = BeautifulSoup(response.text, 'lxml')
-    books = soup.find_all('table', class_='d_book')
-    books_ids = [book.find('a')['href'] for book in books]
+    # books = soup.find_all('table', class_='d_book')
+    # books_ids = [book.find('a')['href'] for book in books]
+    selector = "table.d_book a[href^='/b']"
+    books_ids = [a['href'] for a in soup.select(selector)]
+    print(books_ids)
     books_ids = [
         int(book_id.replace('b', '').strip('/')) for book_id in books_ids
     ]
