@@ -7,7 +7,7 @@
 Python3 должен быть установлен. 
 Используйте `pip` (или `pip3`, если есть конфликт с Python2), чтобы установить
 необходимые библиотеки:
-```
+```bash
 pip install -r requirements.txt
 ```
 
@@ -15,9 +15,14 @@ pip install -r requirements.txt
 
 Чтобы скачать книги, запустите:
 ```
-python parse_tululu.py {start_page} {end_page}
+python parse_tululu.py [-h] start_id end_id
 ```
-где `start_page` - id первой книги, а `end_page` - id последней книги.
+
+Чтобы скачать книги по научной фантастике, запустите:
+```
+python parse_tululu_category.py [-h] [--start_page START_PAGE] [--end_page END_PAGE] [--dest_folder DEST_FOLDER] [--skip_imgs] [--skip_txt]
+```
+Используйте `[-h]` для получения информации об аргументах.
 
 ### Цель проекта
 
