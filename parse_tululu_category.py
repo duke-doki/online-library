@@ -3,7 +3,7 @@ import time
 import argparse
 import requests
 from bs4 import BeautifulSoup
-
+import os
 from parse_tululu import check_for_redirect, parse_book_page, download_txt, \
     download_image
 
@@ -23,6 +23,7 @@ def get_last_page():
 
 if __name__ == '__main__':
     last_page = get_last_page() + 1
+    current_directory = os.getcwd()
     parser = argparse.ArgumentParser(
         description='This program allows to download books'
     )
@@ -30,7 +31,18 @@ if __name__ == '__main__':
                         default=1, type=int)
     parser.add_argument('--end_page', help='Enter the id of the last page',
                         default=last_page, type=int)
+    parser.add_argument(
+        '--dest_folder',
+        help='Enter the directory for text, images, json to be stored in',
+        default=current_directory,
+        type=str
+    )
+    parser.add_argument('--skip_imgs', help='Skips images downloading',
+                        default=False, action='store_const', const=True)
+    parser.add_argument('--skip_txt', help='Skips txt downloading',
+                        default=False, action='store_const', const=True)
     args = parser.parse_args()
+    os.chdir(args.dest_folder)
 
     for page_num in range(args.start_page, args.end_page):
         scifi_catalog_url = f'https://tululu.org/l55/{page_num}'
@@ -61,17 +73,19 @@ if __name__ == '__main__':
                     book = parse_book_page(book_response, book_id)
                     downloaded_books.append(book)
 
-                    download_txt(
-                        txt_url,
-                        book['title'],
-                        folder_for_books,
-                        params
-                    )
-                    download_image(
-                        book['image_url'],
-                        book['img_name'],
-                        folder_for_images
-                    )
+                    if not args.skip_txt:
+                        download_txt(
+                            txt_url,
+                            book['title'],
+                            folder_for_books,
+                            params
+                        )
+                    if not args.skip_imgs:
+                        download_image(
+                            book['image_url'],
+                            book['img_name'],
+                            folder_for_images
+                        )
                 except requests.exceptions.ConnectionError as e:
                     print(f'At {book_id} connection error occurred: {e}')
                     reconnection_tries += 1
