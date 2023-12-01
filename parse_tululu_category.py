@@ -50,6 +50,7 @@ if __name__ == '__main__':
         scifi_catalog_url = f'https://tululu.org/l55/{page_num}'
         response = requests.get(scifi_catalog_url)
         response.raise_for_status()
+        check_for_redirect(response)
 
         soup = BeautifulSoup(response.text, 'lxml')
         selector = "table.d_book a[href^='/b']"
