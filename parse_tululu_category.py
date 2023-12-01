@@ -114,10 +114,5 @@ if __name__ == '__main__':
                     else:
                         break
 
-            downloaded_books_json = json.dumps(
-                downloaded_books,
-                ensure_ascii=False
-            )
-
             with open("downloaded_books.json", "w") as file:
-                file.write(downloaded_books_json)
+                json.dump(downloaded_books, file, ensure_ascii=False)
