@@ -55,7 +55,6 @@ if __name__ == '__main__':
         soup = BeautifulSoup(response.text, 'lxml')
         selector = "table.d_book a[href^='/b']"
         books_ids = [a['href'] for a in soup.select(selector)]
-        print(books_ids)
         books_ids = [
             int(book_id.replace('b', '').strip('/')) for book_id in books_ids
         ]
