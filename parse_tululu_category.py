@@ -40,9 +40,9 @@ if __name__ == '__main__':
         type=str
     )
     parser.add_argument('--skip_imgs', help='Skips images downloading',
-                        default=False, action='store_const', const=True)
+                        default=False, action='store_true')
     parser.add_argument('--skip_txt', help='Skips txt downloading',
-                        default=False, action='store_const', const=True)
+                        default=False, action='store_true')
     args = parser.parse_args()
     os.chdir(args.dest_folder)
 
