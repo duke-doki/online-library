@@ -1,9 +1,11 @@
-import json
-import time
 import argparse
+import json
+import os
+import time
+
 import requests
 from bs4 import BeautifulSoup
-import os
+
 from parse_tululu import check_for_redirect, parse_book_page, download_txt, \
     download_image
 
