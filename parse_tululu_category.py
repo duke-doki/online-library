@@ -45,7 +45,7 @@ if __name__ == '__main__':
                         default=False, action='store_true')
     args = parser.parse_args()
     os.chdir(args.dest_folder)
-
+    downloaded_books = []
     for page_num in range(args.start_page, args.end_page):
         scifi_catalog_url = f'https://tululu.org/l55/{page_num}'
         try:
@@ -73,7 +73,7 @@ if __name__ == '__main__':
 
             folder_for_books = 'books'
             folder_for_images = 'images'
-            downloaded_books = []
+
             for book_id in books_ids:
                 txt_url = f'https://tululu.org/txt.php'
                 params = {'id': book_id}
@@ -114,5 +114,5 @@ if __name__ == '__main__':
                     else:
                         break
 
-            with open("downloaded_books.json", "w") as file:
-                json.dump(downloaded_books, file, ensure_ascii=False)
+    with open("downloaded_books.json", "w") as file:
+        json.dump(downloaded_books, file, ensure_ascii=False)
