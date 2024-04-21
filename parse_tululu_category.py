@@ -47,6 +47,7 @@ if __name__ == '__main__':
     os.chdir(args.dest_folder)
     downloaded_books = []
     for page_num in range(args.start_page, args.end_page):
+        print(page_num)
         scifi_catalog_url = f'https://tululu.org/l55/{page_num}'
         try:
             response = requests.get(scifi_catalog_url)
@@ -67,14 +68,15 @@ if __name__ == '__main__':
             soup = BeautifulSoup(response.text, 'lxml')
             selector = "table.d_book a[href^='/b']"
             books_ids = [a['href'] for a in soup.select(selector)]
-            books_ids = [
+            books_ids = set(
                 int(book_id.replace('b', '').strip('/')) for book_id in books_ids
-            ]
+            )
 
             folder_for_books = 'books'
             folder_for_images = 'images'
 
             for book_id in books_ids:
+                print(book_id)
                 txt_url = f'https://tululu.org/txt.php'
                 params = {'id': book_id}
                 book_url = f'https://tululu.org/b{book_id}/'
@@ -115,4 +117,4 @@ if __name__ == '__main__':
                         break
 
     with open("downloaded_books.json", "w") as file:
-        json.dump(downloaded_books, file, ensure_ascii=False)
+        json.dump(downloaded_books, file, ensure_ascii=False, indent=4)
