@@ -36,4 +36,4 @@ if __name__ == '__main__':
     server = Server()
     render_website()
     server.watch('index.html', render_website)
-    server.serve(root='pages', default_filename='rendered_index_1.html')
+    server.serve(root='.', default_filename='pages/rendered_index_1.html')
