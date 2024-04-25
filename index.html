@@ -24,15 +24,18 @@
               </div>
               <div class="col-md-8">
                 <div class="card-body">
-                  <h5 class="card-title">{{ loop.index }} {{ book.title }}</h5>
+                  <h5 class="card-title">{{ book.title }}</h5>
                   <p class="card-text">{{ book.author }}</p>
                   <p class="card-text">
                     {% for genre in book.genres %}
                     {{ genre }}{% if not loop.last %}, {% endif %}
                     {% endfor %}
                   </p>
-                  <p class="card-text"><small class="text-muted">Last updated 3
-                    mins ago</small></p>
+                  <p class="card-text">
+                    <a href="books/{{ book.title|replace(':','')|urlencode }}.txt" target="_blank">
+                      Читать
+                    </a>
+                  </p>
                 </div>
               </div>
             </div>
