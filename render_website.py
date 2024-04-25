@@ -19,7 +19,7 @@ def render_website():
             loader=FileSystemLoader('.'),
             autoescape=select_autoescape(['html'])
         )
-        template = env.get_template('index.html')
+        template = env.get_template('start_index.html')
 
         rendered_books = template.render(
             columns=columned_books,
@@ -35,5 +35,5 @@ def render_website():
 if __name__ == '__main__':
     server = Server()
     render_website()
-    server.watch('index.html', render_website)
+    server.watch('start_index.html', render_website)
     server.serve(root='.', default_filename='pages/rendered_index_1.html')
