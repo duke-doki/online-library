@@ -11,7 +11,7 @@
     <title>Hello, world!</title>
   </head>
   <body>
-    <div class="mx-auto" style="width: 400px;">
+    <div class="mx-auto" style="width: 400px; margin-top: 10px">
       <nav aria-label="Page navigation example" >
         <ul class="pagination">
           <li class="page-item{% if current_page == 1 %} disabled{% endif %}"><a class="page-link" href="rendered_index_{{ current_page - 1 }}.html">Назад</a></li>
@@ -39,7 +39,7 @@
                   <p class="card-text">{{ book.author }}</p>
                   <p class="card-text">
                     {% for genre in book.genres %}
-                    {{ genre }}{% if not loop.last %}, {% endif %}
+                    <span class="badge badge-light">{{ genre }}{% if not loop.last %}, {% endif %}</span>
                     {% endfor %}
                   </p>
                   <p class="card-text">
