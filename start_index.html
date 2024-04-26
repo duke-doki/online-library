@@ -1,12 +1,13 @@
 <!doctype html>
 <html lang="ru">
+  {% set base_path = '/online-library' %}
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="static/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ base_path }}/static/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <link rel="icon" type="image/x-icon" href="static/favicon.ico">
     <title>Hello, world!</title>
   </head>
@@ -14,11 +15,11 @@
     <div class="mx-auto" style="width: 400px; margin-top: 10px">
       <nav aria-label="Page navigation example" >
         <ul class="pagination">
-          <li class="page-item{% if current_page == 1 %} disabled{% endif %}"><a class="page-link" href="pages/rendered_index_{{ current_page - 1 }}.html">Назад</a></li>
+          <li class="page-item{% if current_page == 1 %} disabled{% endif %}"><a class="page-link" href="{{ base_path }}/pages/rendered_index_{{ current_page - 1 }}.html">Назад</a></li>
           {% for i in range(1, pages_num + 1) %}
-          <li class="page-item{% if i == current_page %} active{% endif %}"><a class="page-link" href="pages/rendered_index_{{ i }}.html">{{ i }}</a></li>
+          <li class="page-item{% if i == current_page %} active{% endif %}"><a class="page-link" href="{{ base_path }}/pages/rendered_index_{{ i }}.html">{{ i }}</a></li>
           {% endfor %}
-          <li class="page-item{% if current_page == pages_num %} disabled{% endif %}"><a class="page-link" href="pages/rendered_index_{{ current_page + 1 }}.html">Вперёд</a></li>
+          <li class="page-item{% if current_page == pages_num %} disabled{% endif %}"><a class="page-link" href="{{ base_path }}/pages/rendered_index_{{ current_page + 1 }}.html">Вперёд</a></li>
         </ul>
       </nav>
     </div>
@@ -30,7 +31,7 @@
           <div class="card mb-3" style="max-width: 540px;">
             <div class="row no-gutters">
               <div class="col-md-4">
-                <img src="images/{{ book.img_name|urlencode }}" class="card-img"
+                <img src="{{ base_path }}/images/{{ book.img_name|urlencode }}" class="card-img"
                      alt="{{ book.title }}">
               </div>
               <div class="col-md-8">
@@ -43,7 +44,7 @@
                     {% endfor %}
                   </p>
                   <p class="card-text">
-                    <a href="books/{{ book.title|replace(':','')|urlencode }}.txt" target="_blank">
+                    <a href="{{ base_path }}/books/{{ book.title|replace(':','')|urlencode }}.txt" target="_blank">
                       Читать
                     </a>
                   </p>
@@ -59,8 +60,8 @@
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
-    <script src="static/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="static/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+    <script src="{{ base_path }}/static/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="{{ base_path }}/static/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 
     <!-- Option 2: jQuery, Popper.js, and Bootstrap JS
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
