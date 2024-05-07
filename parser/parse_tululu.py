@@ -79,8 +79,8 @@ if __name__ == '__main__':
                         default=2, type=int)
     args = parser.parse_args()
 
-    folder_for_books = 'books'
-    folder_for_images = 'images'
+    folder_for_books = os.path.join('media', 'books')
+    folder_for_images = os.path.join('media', 'images')
     for book_id in range(args.start_id, args.end_id+1):
         txt_url = f'https://tululu.org/txt.php'
         params = {'id': book_id}

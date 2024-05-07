@@ -72,8 +72,8 @@ if __name__ == '__main__':
                 int(book_id.replace('b', '').strip('/')) for book_id in books_ids
             )
 
-            folder_for_books = 'books'
-            folder_for_images = 'images'
+            folder_for_books = os.path.join('media', 'books')
+            folder_for_images = os.path.join('media', 'images')
 
             for book_id in books_ids:
                 print(book_id)
