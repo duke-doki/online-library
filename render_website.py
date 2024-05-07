@@ -31,6 +31,10 @@ def render_website():
         with open(page_path, 'w', encoding="utf8") as file:
             file.write(rendered_books)
 
+        if page_num == 1:
+            with open('index.html', 'w', encoding="utf8") as file:
+                file.write(rendered_books)
+
 
 if __name__ == '__main__':
     server = Server()
