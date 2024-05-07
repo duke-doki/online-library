@@ -2,6 +2,7 @@ import argparse
 import json
 import os
 import time
+from pathlib import Path
 
 import requests
 from bs4 import BeautifulSoup
@@ -72,6 +73,7 @@ if __name__ == '__main__':
                 int(book_id.replace('b', '').strip('/')) for book_id in books_ids
             )
 
+            Path('media').mkdir(exist_ok=True)
             folder_for_books = os.path.join('media', 'books')
             folder_for_images = os.path.join('media', 'images')
 
@@ -87,7 +89,7 @@ if __name__ == '__main__':
                         book_response.raise_for_status()
                         check_for_redirect(book_response)
                         book = parse_book_page(book_response, book_id)
-                        downloaded_books.append(book)
+
 
                         if not args.skip_txt:
                             download_txt(
@@ -114,6 +116,7 @@ if __name__ == '__main__':
                         print(f'At {book_id} HTTP error occurred: {e}')
                         break
                     else:
+                        downloaded_books.append(book)
                         break
 
     with open("downloaded_books.json", "w") as file:

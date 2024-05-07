@@ -79,6 +79,7 @@ if __name__ == '__main__':
                         default=2, type=int)
     args = parser.parse_args()
 
+    Path('media').mkdir(exist_ok=True)
     folder_for_books = os.path.join('media', 'books')
     folder_for_images = os.path.join('media', 'images')
     for book_id in range(args.start_id, args.end_id+1):

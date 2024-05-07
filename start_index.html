@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="ru">
-  {% set base_path = '/online-library' %}
+  {% set base_path = '' %}
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -8,7 +8,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{{ base_path }}/static/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-    <link rel="icon" type="image/x-icon" href="static/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="{{ base_path }}/static/favicon.ico">
     <title>Hello, world!</title>
   </head>
   <body>
@@ -31,7 +31,7 @@
           <div class="card mb-3" style="max-width: 540px;">
             <div class="row no-gutters">
               <div class="col-md-4">
-                <img src="{{ base_path }}/images/{{ book.img_name|urlencode }}" class="card-img"
+                <img src="{{ base_path }}/media/images/{{ book.img_name|urlencode }}" class="card-img"
                      alt="{{ book.title }}">
               </div>
               <div class="col-md-8">
