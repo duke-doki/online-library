@@ -37,7 +37,9 @@ def render_website():
 
 
 if __name__ == '__main__':
+    parent_dir = os.path.dirname(os.path.abspath(__file__))
+    parent_dir = os.path.dirname(parent_dir)
     server = Server()
     render_website()
-    server.watch('start_index.html', render_website)
-    server.serve(root='.', default_filename='pages/rendered_index_1.html')
+    server.watch('online-library/start_index.html', render_website)
+    server.serve(root=parent_dir, default_filename='online-library/index.html')
