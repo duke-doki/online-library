@@ -27,7 +27,7 @@ pip install -r requirements.txt
 $ cat .env
 BOOKS=downloaded_books
 ```
-
+*downloaded_books - это имя вашего json-файла, имеющего структуру как у [downloaded_books.json](downloaded_books.json).
 
 
 ## Сайт
