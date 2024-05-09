@@ -15,11 +15,14 @@ def render_website():
     global books
     with open(f'{books}.json', 'r') as file:
         books = json.load(file)
-    paged_books = list(chunked(books, 20))
+
+    books_for_page = 20
+    paged_books = list(chunked(books, books_for_page))
     pages_num = len(paged_books)
     os.makedirs('pages', exist_ok=True)
     for page_num, page in enumerate(paged_books, start=1):
-        columned_books = chunked(page, int(len(page) / 2))
+        columns = 2
+        columned_books = chunked(page, int(len(page) / columns))
         env = Environment(
             loader=FileSystemLoader('.'),
             autoescape=select_autoescape(['html'])
