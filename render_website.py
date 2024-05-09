@@ -14,8 +14,7 @@ books = env.str('BOOKS')
 def render_website():
     global books
     with open(f'{books}.json', 'r') as file:
-        books_json = file.read()
-    books = json.loads(books_json)
+        books = json.load(file)
     paged_books = list(chunked(books, 20))
     pages_num = len(paged_books)
     os.makedirs('pages', exist_ok=True)
