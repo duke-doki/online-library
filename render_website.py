@@ -1,13 +1,19 @@
 import json
 import os
 
+from environs import Env
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from livereload import Server
 from more_itertools import chunked
 
+env = Env()
+env.read_env()
+books = env.str('BOOKS')
+
 
 def render_website():
-    with open('downloaded_books.json', 'r') as file:
+    global books
+    with open(f'{books}.json', 'r') as file:
         books_json = file.read()
     books = json.loads(books_json)
     paged_books = list(chunked(books, 20))
