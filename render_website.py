@@ -6,18 +6,14 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 from livereload import Server
 from more_itertools import chunked
 
-env = Env()
-env.read_env()
-books = env.str('BOOKS')
-
 
 def render_website():
     global books
     with open(f'{books}.json', 'r') as file:
-        books = json.load(file)
+        books_json = json.load(file)
 
     books_for_page = 20
-    paged_books = list(chunked(books, books_for_page))
+    paged_books = list(chunked(books_json, books_for_page))
     pages_num = len(paged_books)
     os.makedirs('pages', exist_ok=True)
     for page_num, page in enumerate(paged_books, start=1):
@@ -27,7 +23,7 @@ def render_website():
             loader=FileSystemLoader('.'),
             autoescape=select_autoescape(['html'])
         )
-        template = env.get_template('start_index.html')
+        template = env.get_template('template.html')
 
         rendered_books = template.render(
             columns=columned_books,
@@ -45,9 +41,11 @@ def render_website():
 
 
 if __name__ == '__main__':
-    parent_dir = os.path.dirname(os.path.abspath(__file__))
-    parent_dir = os.path.dirname(parent_dir)
+    env = Env()
+    env.read_env()
+    books = env.str('BOOKS')
+    parent_dir = os.path.abspath(os.pardir)
     server = Server()
     render_website()
-    server.watch('online-library/start_index.html', render_website)
+    server.watch('template.html', render_website)
     server.serve(root=parent_dir, default_filename='online-library/index.html')
