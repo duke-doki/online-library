@@ -32,6 +32,12 @@ BOOKS=downloaded_books
 
 ## Сайт
 
+### Простой запуск
+
+Откройте в браузере страницу с книгами в папке `offline`, например `rendered_index_1.html`.
+
+### Запуск командой
+
 Для локального запуска сайта запустите:
 ```bash
 python render_website.py
